@@ -18,11 +18,12 @@ spec:
   {{- end }}
   ports:
   - name: kong-proxy
-    port: {{ .Values.proxy.servicePort }}
-    targetPort: {{ .Values.proxy.containerPort }}
-  {{- if (and (eq .Values.proxy.type "NodePort") (not (empty .Values.proxy.nodePort))) }}
-    nodePort: {{ .Values.proxy.nodePort }}
-  {{- end }}
+    port: 80
+    targetPort: 8000
+    protocol: TCP
+  - name: kong-proxy-ssl
+    port: 443
+    targetPort: 8443
     protocol: TCP
   selector:
     app: {{ template "kong.name" . }}

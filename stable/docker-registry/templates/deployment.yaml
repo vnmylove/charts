@@ -72,11 +72,6 @@ spec:
             - name: REGISTRY_AUTH_HTPASSWD_PATH
               value: "/auth/htpasswd"
 {{- end }}
-            - name: REGISTRY_HTTP_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "docker-registry.fullname" . }}-secret
-                  key: haSharedSecret
 {{- if .Values.tlsSecretName }}
             - name: REGISTRY_HTTP_TLS_CERTIFICATE
               value: /etc/ssl/docker/tls.crt

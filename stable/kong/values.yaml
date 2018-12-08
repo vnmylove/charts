@@ -15,11 +15,11 @@ admin:
 
   # HTTPS traffic on the admin port
   # if set to false also set readinessProbe and livenessProbe httpGet scheme's to 'HTTP'
-  useTLS: true
+  useTLS: false
   servicePort: 8444
   containerPort: 8444
   # Kong admin service type
-  type: NodePort
+  type: ClusterIP
   # Set a nodePort which is available
   # nodePort: 32444
   # Kong admin ingress settings.
@@ -43,9 +43,10 @@ proxy:
 
   # HTTPS traffic on the proxy port
   useTLS: true
-  servicePort: 8443
-  containerPort: 8443
-  type: NodePort
+  servicePort: 8000
+  containerPort: 8000
+  type: LoadBalancer
+  loadBalancerIP: 209.133.201.210
   # Set a nodePort which is available
   # nodePort: 32443
   # Kong proxy ingress settings.
@@ -84,7 +85,7 @@ readinessProbe:
   httpGet:
     path: "/status"
     port: admin
-    scheme: HTTPS
+    scheme: HTTP
   initialDelaySeconds: 30
   timeoutSeconds: 1
   periodSeconds: 10
@@ -96,7 +97,7 @@ livenessProbe:
   httpGet:
     path: "/status"
     port: admin
-    scheme: HTTPS
+    scheme: HTTP
   initialDelaySeconds: 30
   timeoutSeconds: 5
   periodSeconds: 30
@@ -141,6 +142,6 @@ postgresql:
   postgresUser: kong
   postgresDatabase: kong
   persistence:
-    enabled: false
+    enabled: true
   service:
     port: 5432

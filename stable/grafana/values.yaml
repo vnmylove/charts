@@ -100,11 +100,11 @@ affinity: {}
 ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
 ##
 persistence:
-  enabled: false
+  enabled: true
   # storageClassName: default
-  # accessModes:
-  #   - ReadWriteOnce
-  # size: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  size: 10Gi
   # annotations: {}
   # subPath: ""
   # existingClaim:
@@ -134,7 +134,7 @@ extraSecretMounts: []
 
 ## Pass the plugins you want installed as a list.
 ##
-plugins: []
+plugins: ["grafana-piechart-panel"]
   # - digrich-bubblechart-panel
   # - grafana-clock-panel
 
@@ -203,6 +203,14 @@ dashboardsConfigMaps: {}
 ## ref: http://docs.grafana.org/installation/configuration/
 ##
 grafana.ini:
+  smtp:
+    enabled: true
+    host: smtp.gmail.com:465 
+    user: itsupport@younetgroup.com
+    password: YmPq>W8Z
+    skip_verify: true
+    from_address: thonh@younetgroup.com
+    from_name: Grafana System YouNet Media
   paths:
     data: /var/lib/grafana/data
     logs: /var/log/grafana

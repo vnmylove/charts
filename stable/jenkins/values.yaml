@@ -11,7 +11,7 @@
 Master:
   Name: jenkins-master
   Image: "jenkins/jenkins"
-  ImageTag: "lts"
+  ImageTag: "2.150.1"
   ImagePullPolicy: "Always"
 # ImagePullSecret: jenkins
   Component: "jenkins-master"
@@ -25,7 +25,7 @@ Master:
       memory: "256Mi"
     limits:
       cpu: "2000m"
-      memory: "2048Mi"
+      memory: "5Gi"
   # Environment variables that get added to the init container (useful for e.g. http_proxy)
   # InitContainerEnv:
   #   - name: http_proxy
@@ -199,7 +199,7 @@ NetworkPolicy:
 
 ## Install Default RBAC roles and bindings
 rbac:
-  install: false
+  install: true
   serviceAccountName: default
   # Role reference
   roleRef: cluster-admin
