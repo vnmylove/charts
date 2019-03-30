@@ -53,8 +53,8 @@ resources: {}
 persistence:
   accessMode: 'ReadWriteOnce'
   enabled: false
-  size: 10Gi
-  # storageClass: '-'
+  size: 100Gi
+  storageClass: 'rook-ceph-block'
 
 # set the type of filesystem to use: filesystem, s3
 storage: filesystem

@@ -3,7 +3,7 @@
 
 image:
   repository: kong
-  tag: 0.14.1
+  tag: 1.0.3
   pullPolicy: IfNotPresent
   ## Optionally specify an array of imagePullSecrets.
   ## Secrets must be manually created in the namespace.
@@ -52,11 +52,11 @@ proxy:
   #  service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: "*"
 
   # HTTPS traffic on the proxy port
-  useTLS: true
+  useTLS: false
   servicePort: 8000
   containerPort: 8000
   type: LoadBalancer
-  loadBalancerIP: 209.133.201.210
+  #externalIPs: ["23.111.130.210"]
   # Set a nodePort which is available
   # nodePort: 32443
   # Kong proxy ingress settings.
