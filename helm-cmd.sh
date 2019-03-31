@@ -13,13 +13,13 @@ helm install --name identity-redis --namespace sl-staging stable/redis --set clu
 helm install --name sh-memcached  stable/memcached --namespace sl-production --set replicaCount=2
 
 ##### Beging  set up database for staging  
-helm upgrade sh-mysql-staging --namespace sl-staging ./stable/mysql --set imageTag=5.7.19 --set mysqlUser=socialheat --set mysqlPassword=Hgujdf%44sd --set mysqlDatabase=monitoring_app --set nodeSelector.node-type=app
+helm install --name sh-mysql-staging --namespace sl-staging ./stable/mysql --set imageTag=5.7.19 --set mysqlUser=socialheat --set mysqlPassword=Hgujdf%44sd --set mysqlDatabase=monitoring_app --set nodeSelector.node-type=app
 
-helm upgrade sh-master-mysql-staging --namespace sl-staging ./stable/mysql --set imageTag=5.7.19 --set mysqlUser=socialheat --set mysqlPassword=lskdj%44sd --set mysqlDatabase=monitoring_master --set nodeSelector.node-type=app
+helm install --name sh-master-mysql-staging --namespace sl-staging ./stable/mysql --set imageTag=5.7.19 --set mysqlUser=socialheat --set mysqlPassword=lskdj%44sd --set mysqlDatabase=monitoring_master --set nodeSelector.node-type=app
 
-helm upgrade crawling-mysql-staging --namespace sl-staging ./stable/mysql --set imageTag=5.7.19 --set mysqlUser=crawler --set mysqlPassword=kejudsY%44sd --set mysqlDatabase=monitoring_crawl --set nodeSelector.node-type=app
+helm install --name crawling-mysql-staging --namespace sl-staging ./stable/mysql --set imageTag=5.7.19 --set mysqlUser=crawler --set mysqlPassword=kejudsY%44sd --set mysqlDatabase=monitoring_crawl --set nodeSelector.node-type=app
 
-helm upgrade fb-api-mysql-staging --namespace sl-staging ./stable/mysql --set imageTag=5.7.19 --set mysqlUser=fb-api --set mysqlPassword=JshdJds%44sd --set mysqlDatabase=fb_api --set nodeSelector.node-type=app
+helm install --name fb-api-mysql-staging --namespace sl-staging ./stable/mysql --set imageTag=5.7.19 --set mysqlUser=fb-api --set mysqlPassword=JshdJds%44sd --set mysqlDatabase=fb_api --set nodeSelector.node-type=app
 
 helm install --name job-queue-redis-staging --namespace sl-staging stable/redis --set cluster.enabled=false,persistence.enabled=true,nodeSelector.node-type=app
 
