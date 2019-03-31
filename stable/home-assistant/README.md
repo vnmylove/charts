@@ -31,13 +31,15 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ## Configuration
 
-The following tables lists the configurable parameters of the Sentry chart and their default values.
+The following tables lists the configurable parameters of the Home Assistant chart and their default values.
 
 | Parameter                  | Description                         | Default                                                 |
 |----------------------------|-------------------------------------|---------------------------------------------------------|
 | `image.repository`         | Image repository | `homeassistant/home-assistant` |
-| `image.tag`                | Image tag. Possible values listed [here](https://hub.docker.com/r/jacobalberty/home-assistant/tags/).| `0.72.1`|
+| `image.tag`                | Image tag. Possible values listed [here](https://hub.docker.com/r/homeassistant/home-assistant/tags/).| `0.84.6`|
 | `image.pullPolicy`         | Image pull policy | `IfNotPresent` |
+| `image.pullSecrets`        | Secrets to use when pulling the image | `[]` |
+| `strategyType`             | Specifies the strategy used to replace old Pods by new ones | `Recreate` |
 | `service.type`             | Kubernetes service type for the home-assistant GUI | `ClusterIP` |
 | `service.port`             | Kubernetes port where the home-assistant GUI is exposed| `8123` |
 | `service.annotations`      | Service annotations for the home-assistant GUI | `{}` |
@@ -58,6 +60,7 @@ The following tables lists the configurable parameters of the Sentry chart and t
 | `persistence.storageClass` | Type of persistent volume claim | `-` |
 | `persistence.accessMode`  | Persistence access modes | `ReadWriteMany` |
 | `extraEnv`          | Extra ENV vars to pass to the home-assistant container | `{}` |
+| `extraEnvSecrets`   | Extra env vars to pass to the home-assistant container from k8s secrets - see `values.yaml` for an example | `{}` |
 | `configurator.enabled`     | Enable the optional [configuration UI](https://github.com/danielperna84/hass-configurator) | `false` |
 | `configurator.image.repository`         | Image repository | `billimek/hass-configurator-docker` |
 | `configurator.image.tag`                | Image tag | `x86_64-0.3.0`|
@@ -78,7 +81,6 @@ The following tables lists the configurable parameters of the Sentry chart and t
 | `configurator.nodeSelector`             | Node labels for pod assignment for the configurator UI | `{}` |
 | `configurator.schedulerName`            | Use an alternate scheduler, e.g. "stork" for the configurator UI | `` |
 | `configurator.podAnnotations`           | Affinity settings for pod assignment for the configurator UI | `{}` |
-| `configurator.replicaCount`             | Number of replicas for the configurator UI | `1` |
 | `configurator.resources`                | CPU/Memory resource requests/limits for the configurator UI | `{}` |
 | `configurator.securityContext`          | Security context to be added to hass-configurator pods for the configurator UI | `{}` |
 | `configurator.service.type`             | Kubernetes service type for the configurator UI | `ClusterIP` |

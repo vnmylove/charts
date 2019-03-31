@@ -12,9 +12,13 @@ spec:
   replicas: {{ .Values.replicaCount }}
   updateStrategy:
     type: {{ .Values.statefulset.updateStrategy }}
+    {{- if (eq "Recreate" .Values.statefulset.updateStrategy) }}
+    rollingUpdate: null
+    {{- else }}
     {{- if .Values.statefulset.rollingUpdatePartition }}
     rollingUpdate:
       partition: {{ .Values.statefulset.rollingUpdatePartition }}
+    {{- end }}
     {{- end }}
   selector:
     matchLabels:
@@ -39,14 +43,14 @@ spec:
 {{- end }}
 {{- end }}
     spec:
-      {{- if .Values.image.pullSecrets }}
-      imagePullSecrets:
-{{ toYaml .Values.image.pullSecrets | indent 8 }}
-      {{- end }}
+{{- include "nats.imagePullSecrets" . | indent 6 }}
       {{- if .Values.securityContext.enabled }}
       securityContext:
         fsGroup: {{ .Values.securityContext.fsGroup }}
         runAsUser: {{ .Values.securityContext.runAsUser }}
+      {{- end }}
+      {{- if .Values.priorityClassName }}
+      priorityClassName: {{ .Values.priorityClassName | quote }}
       {{- end }}
       {{- if .Values.nodeSelector }}
       nodeSelector:
@@ -94,11 +98,11 @@ spec:
         {{- end }}
         ports:
         - name: client
-          containerPort: {{ .Values.clientService.port }}
+          containerPort: {{ .Values.client.service.port }}
         - name: cluster
-          containerPort: {{ .Values.clusterService.port }}
+          containerPort: {{ .Values.cluster.service.port }}
         - name: monitoring
-          containerPort: {{ .Values.monitoringService.port }}
+          containerPort: {{ .Values.monitoring.service.port }}
         {{- if .Values.livenessProbe.enabled }}
         livenessProbe:
           httpGet:
@@ -132,11 +136,11 @@ spec:
         {{- end }}
 {{- if .Values.metrics.enabled }}
       - name: metrics
-        image: {{ template "metrics.image" . }}
+        image: {{ template "nats.metrics.image" . }}
         imagePullPolicy: {{ .Values.metrics.image.pullPolicy | quote }}
         args:
 {{ toYaml .Values.metrics.args | indent 10 -}}
-          - "http://localhost:{{ .Values.monitoringService.port }}"
+          - "http://localhost:{{ .Values.monitoring.service.port }}"
         ports:
         - name: metrics
           containerPort: {{ .Values.metrics.port }}
@@ -153,7 +157,7 @@ spec:
           initialDelaySeconds: 5
           timeoutSeconds: 1
         resources:
-  {{ toYaml .Values.metrics.resources | indent 10 }}
+{{ toYaml .Values.metrics.resources | indent 10 }}
 {{- end }}
       volumes:
       - name: config

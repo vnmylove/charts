@@ -29,12 +29,7 @@ spec:
   {{- end }}
 {{- end }}
     spec:
-      {{- if .Values.image.pullSecrets }}
-      imagePullSecrets:
-      {{- range .Values.image.pullSecrets }}
-        - name: {{ . }}
-      {{- end}}
-      {{- end }}
+{{- include "phabricator.imagePullSecrets" . | indent 6 }}
       hostAliases:
       - ip: "127.0.0.1"
         hostnames:
@@ -53,8 +48,9 @@ spec:
             secretKeyRef:
               name: {{ template "phabricator.mariadb.fullname" . }}
               key: mariadb-root-password
+{{- $port:=.Values.service.port | toString }}
         - name: PHABRICATOR_HOST
-          value: {{ include "phabricator.host" . | quote }}
+          value: "{{ include "phabricator.host" . }}{{- if ne $port "80" }}:{{ .Values.service.port }}{{ end }}"
         {{- if .Values.phabricatorAlternateFileDomain }}
         - name: PHABRICATOR_ALTERNATE_FILE_DOMAIN
           value: {{ .Values.phabricatorAlternateFileDomain | quote }}
@@ -135,7 +131,7 @@ spec:
           mountPath: /bitnami/apache
 {{- if .Values.metrics.enabled }}
       - name: metrics
-        image: {{ template "metrics.image" . }}
+        image: {{ template "phabricator.metrics.image" . }}
         imagePullPolicy: {{ .Values.metrics.image.pullPolicy | quote }}
         command: [ '/bin/apache_exporter', '-scrape_uri', 'http://status.localhost:80/server-status/?auto']
         ports:
