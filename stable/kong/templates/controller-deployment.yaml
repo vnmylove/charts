@@ -56,7 +56,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: {{ template "kong.postgresql.fullname" . }}
-              key: postgresql-password
+              key: postgres-password
         {{- end }}
         {{- if .Values.cassandra.enabled }}
         - name: KONG_CASSANDRA_CONTACT_POINTS
@@ -89,7 +89,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: {{ template "kong.postgresql.fullname" . }}
-              key: postgresql-password
+              key: postgres-password
         {{- end }}
         {{- if .Values.cassandra.enabled }}
         - name: KONG_CASSANDRA_CONTACT_POINTS

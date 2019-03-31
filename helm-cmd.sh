@@ -12,7 +12,7 @@ helm install --name identity-redis --namespace sl-staging stable/redis --set clu
 
 helm install --name sh-memcached  stable/memcached --namespace sl-production --set replicaCount=2
 
-
+##### Beging  set up database for staging  
 helm upgrade sh-mysql-staging --namespace sl-staging ./stable/mysql --set imageTag=5.7.19 --set mysqlUser=socialheat --set mysqlPassword=Hgujdf%44sd --set mysqlDatabase=monitoring_app --set nodeSelector.node-type=app
 
 helm upgrade sh-master-mysql-staging --namespace sl-staging ./stable/mysql --set imageTag=5.7.19 --set mysqlUser=socialheat --set mysqlPassword=lskdj%44sd --set mysqlDatabase=monitoring_master --set nodeSelector.node-type=app
@@ -26,7 +26,13 @@ helm install --name job-queue-redis-staging --namespace sl-staging stable/redis 
 helm install --name identity-redis-staging --namespace sl-staging stable/redis --set cluster.enabled=false,persistence.enabled=true,nodeSelector.node-type=app
 
 helm install --name topicposts-redis-staging --namespace sl-staging stable/redis --set cluster.enabled=false,persistence.enabled=true,nodeSelector.node-type=app
+
 helm install --name sh-memcached-staging  stable/memcached --namespace sl-staging --set replicaCount=1
+
+##### End set up database for staging  
+
+
+
 
 helm install --name sh-mysql-testing --namespace sl-testing stable/mysql --set imageTag=5.7.19 --set mysqlUser=socialheat --set mysqlPassword=Hgujdf%44sd --set mysqlDatabase=monitoring_app --set nodeSelector.node-type=app
 

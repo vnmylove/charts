@@ -47,11 +47,7 @@ Master:
       memory: "256Mi"
     limits:
       cpu: "2000m"
-<<<<<<< HEAD
-      memory: "5Gi"
-=======
       memory: "4096Mi"
->>>>>>> 5732b79d0e1be1b25209abd29211aaf7d3fa5d2c
   # Environment variables that get added to the init container (useful for e.g. http_proxy)
   # InitContainerEnv:
   #   - name: http_proxy
@@ -344,7 +340,7 @@ Persistence:
   # StorageClass: "-"
   Annotations: {}
   AccessMode: ReadWriteOnce
-  Size: 8Gi
+  Size: 50Gi
   volumes:
   #  - name: nothing
   #    emptyDir: {}
@@ -366,10 +362,6 @@ rbac:
   serviceAccountName: default
   # Role reference
   roleRef: cluster-admin
-<<<<<<< HEAD
-  # Role kind (RoleBinding or ClusterRoleBinding)
-  roleBindingKind: ClusterRoleBinding
-=======
   # Role kind (Role or ClusterRole)
   roleKind: ClusterRole
   # Role binding kind (RoleBinding or ClusterRoleBinding)
@@ -411,4 +403,3 @@ backup:
   # Additional support can added. Visit this repository for details
   # Ref: https://github.com/nuvo/skbn
   destination: s3://nuvo-jenkins-data/backup
->>>>>>> 5732b79d0e1be1b25209abd29211aaf7d3fa5d2c
