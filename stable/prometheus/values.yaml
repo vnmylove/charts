@@ -175,7 +175,7 @@ alertmanager:
 
     ## alertmanager data Persistent Volume size
     ##
-    size: 2Gi
+    size: 10Gi
 
     ## alertmanager data Persistent Volume Storage Class
     ## If defined, storageClassName: <storageClass>
@@ -725,7 +725,7 @@ server:
 
     ## Prometheus server data Persistent Volume size
     ##
-    size: 8Gi
+    size: 50Gi
 
     ## Prometheus server data Persistent Volume Storage Class
     ## If defined, storageClassName: <storageClass>
@@ -1051,8 +1051,8 @@ serverFiles:
           - 192.168.0.151:9983
       
       - job_name: 'solrtopic'
-        scrape_interval: 2m
-        scrape_timeout: 30s
+        scrape_interval: 5m
+        scrape_timeout: 60s
         static_configs:
         - targets: 
           - 192.168.0.166:9983
